@@ -23,10 +23,10 @@ for char in fuzz_chars:
         # Envie o payload
         sock.send(payload.encode())
         
-        # Aguarde a resposta (opcional)
+        # Aguarde a resposta 
         response = sock.recv(1024)
         
-        # Verifique se há comportamento anormal na resposta (opcional)
+        # Verifique se há comportamento anormal na resposta 
         if "crash" in response.decode():
             print(f"Encontrada uma possível vulnerabilidade com o caractere: {char}")
     except:
