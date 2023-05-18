@@ -13,6 +13,9 @@ for char in fuzz_chars:
     # Cria um payload com o caractere repetido várias vezes
     payload = char * 1000
     
+    # Obtém o tamanho do payload em bytes
+    payload_size = len(payload.encode())
+    
     # Cria o socket TCP
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
@@ -29,6 +32,7 @@ for char in fuzz_chars:
         # Verifique se há comportamento anormal na resposta 
         if "crash" in response.decode():
             print(f"Encontrada uma possível vulnerabilidade com o caractere: {char}")
+            print(f"Tamanho do payload: {payload_size} bytes")
     except:
         print(f"Não foi possível conectar-se ao alvo: {target_ip}:{target_port}")
     
