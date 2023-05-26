@@ -12,6 +12,7 @@ def send_payload(target_ip, target_port, payload):
     except Exception as e:
         print(f"Não foi possível conectar-se ao alvo: {target_ip}:{target_port}")
         print(f"Mensagem de erro: {str(e)}")
+        print(f"Valor do padrão gerado: {payload}")
 
     sock.close()
 
