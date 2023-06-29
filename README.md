@@ -10,4 +10,4 @@ O programa cria um socket TCP e tenta conectar-se ao alvo usando o endereço IP 
 
 Ordem recomendada para utilizaçao:
 
-fuzzing.py > pattern_tool.py > send_bytes.py > payload_shellcode.py > exploit_tool.py
+fuzzing.py > pattern_tool.py > send_bytes.py > send_badchars.py > payload_shellcode.py > exploit_tool.py
