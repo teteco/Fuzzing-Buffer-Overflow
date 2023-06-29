@@ -1,26 +1,24 @@
 import socket
+import time
+import sys
 
-def send_bytes(target_ip, target_port, payload):
-    # Cria o socket TCP
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+ip = input("Digite o IP alvo: ")
+port = int(input("Digite a porta alvo: "))
+timeout = 5
+prefix = ""
+string = prefix + "A" * 100
 
+while True:
     try:
-        # Conecta-se ao alvo
-        sock.connect((target_ip, target_port))
-        
-        # Envia os bytes especificados
-        sock.send(payload.encode())
-        
-        print(f"Bytes enviados: {len(payload)}")
-    except Exception as e:
-        print(f"Erro ao enviar bytes: {e}")
-    finally:
-        # Fecha o socket
-        sock.close()
-
-# Exemplo de uso
-target_ip = input("Insira o endereço IP do alvo: ")
-target_port = int(input("Insira a porta do alvo: "))
-payload = input("Insira os caracteres específicos de bytes a serem enviados: ")
-
-send_bytes(target_ip, target_port, payload)
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.settimeout(timeout)
+            s.connect((ip, port))
+            s.recv(1024)
+            print(f"Fuzzing with {len(string) - len(prefix)} bytes")
+            s.send(bytes(string, "latin-1"))
+            s.recv(1024)
+    except:
+        print("Fuzzing crashed at {} bytes".format(len(string) - len(prefix)))
+        sys.exit(0)
+    string += 100 * "A"
+    time.sleep(1)
