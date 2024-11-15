@@ -11,7 +11,7 @@ Este guia explica a ordem de execução de cada script que você criou e como ut
 4. **Usar o Mona Helper (`mona_helper.py`)**
 5. **Envio do Buffer (`send_buffer.py`)**
 6. **Geração de Shellcode (`shellcode_generator.py`)**
-7. **Criação e envio do exploit final (`exploit_tool.py` e `exploit.py`)**
+7. **Criação e envio do exploit final ( `exploit.py`)**
 
 ---
 
