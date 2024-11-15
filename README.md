@@ -96,17 +96,8 @@ python3 shellcode_generator.py
 ---
 
 ## **7. Criação e Envio do Exploit Final**
-### **Script 1:** `exploit_tool.py` (Configuração personalizada)
-Este script permite criar o exploit final com base no shellcode gerado e nos offsets encontrados. Ele é mais flexível e permite ajustes antes do envio.
 
-### **Como usar:**
-```bash
-python3 exploit_tool.py
-```
-- **Entrada**: Solicita **IP**, **porta**, **offset**, **JMP ESP**, e **shellcode**.
-- **Resultado**: Cria o exploit final pronto para ser enviado.
-
-### **Script 2:** `exploit.py` (Execução direta)
+### **Script 1:** `exploit.py` (Execução direta)
 O script final é usado para enviar o exploit diretamente ao alvo.
 
 ### **Como usar:**
