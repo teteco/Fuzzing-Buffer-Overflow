@@ -137,4 +137,4 @@ Certifique-se de que você possui o seguinte instalado:
 
 ---
 
-Com este guia, você tem um fluxo completo para identificar e explorar vulnerabilidades de Buffer Overflow de forma estruturada e controlada. Boa exploração! 🚀
+Com este guia, você tem um fluxo completo para identificar e explorar vulnerabilidades de Buffer Overflow 
